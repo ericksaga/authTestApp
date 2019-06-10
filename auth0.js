@@ -12,10 +12,24 @@ window.addEventListener('load', function() {
     });
   
     var loginBtn = document.getElementById('btn-login');
-  
+    var logoutBtn = document.getElementById('btn-logout');
     loginBtn.addEventListener('click', function(e) {
       e.preventDefault();
       webAuth.authorize();
     });
+    logoutBtn.addEventListener('click', logout);
+    function logout() {
+      // Remove isLoggedIn flag from localStorage
+      localStorage.removeItem('isLoggedIn');
+      // Remove tokens and expiry time
+      accessToken = '';
+      idToken = '';
+      expiresAt = 0;
   
+      webAuth.logout({
+        return_to: window.location.origin
+      });
+  
+      displayButtons();
+    }
   });
